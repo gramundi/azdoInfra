@@ -7,6 +7,7 @@ parameters:
      templateName: ''
      ResourceGroup: ''
      AzureConn: ''
+
 variables:
   ARM_PASS: $(adminPass)
 
