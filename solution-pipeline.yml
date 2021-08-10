@@ -1,5 +1,9 @@
+trigger: none
+
 pool:
-name: 'Home1'
+  name: 'Home1'
+
+steps:
 
 - template: azure-pipeline.yml
   parameters:
