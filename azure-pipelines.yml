@@ -21,7 +21,7 @@ steps:
     azureResourceManagerConnection: '${{ parameters.AzureConn }}'
     action: 'Create Or Update Resource Group'
     resourceGroupName: '${{ parameters.ResourceGroup }}'
-    location: '$location'
+    location: '${{ parameters.location }}'
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/ ${{ parameters.templateName }}.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.parameters.json'

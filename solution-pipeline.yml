@@ -11,3 +11,4 @@ steps:
     templateName: 'appserviceplan'
     ResourceGroup: 'SandBoxRg'
     AzureConn: 'AzureConnection'
+    location: 'west europe'
