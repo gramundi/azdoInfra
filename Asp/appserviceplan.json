@@ -25,7 +25,7 @@
     "skucode": {
       "type": "string",
       "minLength": 2,
-      "defaultValue": "P1v2",
+      "defaultValue": "S1",
       "metadata": {
         "description": "This is the specific pricing tier which is used for the Application Service Plan.  (If using ASE then this is I1, I2, I3)"
       }
