@@ -2,6 +2,11 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+parameters:
+     PaaSService: ''
+     templateName: ''
+     ResourceGroup: ''
+     AzureConn: ''
 variables:
   ARM_PASS: $(adminPass)
 
@@ -21,12 +26,12 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'AzureConnection'
+    azureResourceManagerConnection: '${{ parameters.AzureConn }}'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: '$(ResourceGroup)'
+    resourceGroupName: '${{ parameters.ResourceGroup }}'
     location: '$location'
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/$(AzurePaaSService)/appserviceplan.json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/$(AzurePaaSService)/appserviceplan.parameters.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/ ${{ parameters.templateName }}.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.parameters.json'
     overrideParameters: '-appServicePlanName $(aspName)'
     deploymentMode: 'Incremental'

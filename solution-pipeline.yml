@@ -1,0 +1,9 @@
+pool:
+name: 'Home1'
+
+- template: azure-pipeline.yml
+  parameters:
+    PaaSService: 'Asp'
+    templateName: 'appserviceplan'
+    ResourceGroup: 'SandBoxRg'
+    AzureConn: 'AzureConnection'
