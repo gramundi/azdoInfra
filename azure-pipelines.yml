@@ -2,7 +2,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
 variables:
   ARM_PASS: $(adminPass)
 
@@ -10,25 +9,24 @@ trigger:
 - none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'Home1'
 
 steps:
 - task: CopyFiles@2
   inputs:
-    SourceFolder: 'quickstarts/microsoft.web/webapp-linux-managed-mysql/'
+    SourceFolder: 'azdoInfra/Asp/'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: '<your-resource-manager-connection>'
-    subscriptionId: '<your-subscription-id>'
+    azureResourceManagerConnection: 'AzureConn'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'ARMPipelinesLAMP-rg'
-    location: '<your-closest-location>'
+    resourceGroupName: 'DEVOPSSANDBOX'
+    location: 'west europe'
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/azuredeploy.parameters.json'
-    overrideParameters: '-siteName $(siteName) -administratorLogin $(adminUser) -administratorLoginPassword $(ARM_PASS)'
+    csmFile: '$(Build.ArtifactStagingDirectory)/Asp/appserviceplan.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/Asp/appserviceplan.parameters.json'
+    overrideParameters: '-appServicePlanName $(aspName)'
     deploymentMode: 'Incremental'
