@@ -23,7 +23,7 @@ steps:
     resourceGroupName: '${{ parameters.ResourceGroup }}'
     location: '${{ parameters.location }}'
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/ ${{ parameters.templateName }}.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.parameters.json'
     overrideParameters: '-appServicePlanName $(aspName)'
     deploymentMode: 'Incremental'
