@@ -30,7 +30,6 @@ steps:
       inputs:
           command: 'push'
           packagesToPush: '$(Pipeline.Workspace)/**/*.nupkg'
-          nuGetFeedType: 'internal'
           publishVstsFeed: 'gramundi'
     
 
