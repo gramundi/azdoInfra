@@ -1,3 +1,9 @@
+variables:
+   minor: 0
+   major: 0
+   patch: $(Build.BuildID)
+   buildVer: $(major).$(minor).$(Build.BuildID)
+   
 pool: 
    name: 'Home1' 
 
