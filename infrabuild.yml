@@ -1,7 +1,7 @@
-- stage: Build
-  jobs:
-  - job: Build
-    steps:
+pool: 
+   name: 'Home1' 
+
+steps:
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
