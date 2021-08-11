@@ -1,0 +1,19 @@
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: '$(System.DefaultWorkingDirectory)/PowerShellModuleProject.nuspec'
+        versioningScheme: byEnvVar
+        versionEnvVar: buildVer
+        buildProperties: 'VERSIONHERE=$(buildVer)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'NuGetPackage'
+        publishLocation: 'Container'
+
+
+
