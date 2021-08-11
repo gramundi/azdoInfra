@@ -26,12 +26,7 @@ steps:
         artifactName: 'NuGetPackage'
         itemPattern: '**'
         targetPath: '$(Pipeline.Workspace)'
-    - task: NuGetCommand@2
-        inputs:
-          command: 'push'
-          packagesToPush: '$(Pipeline.Workspace)/**/*.nupkg'
-          nuGetFeedType: 'internal'
-          publishVstsFeed: 'gramundi'
+    
 
 
 
