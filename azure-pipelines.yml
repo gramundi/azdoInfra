@@ -38,5 +38,5 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.parameters.json'
-    overrideParameters: '-appServicePlanName $(aspName)'
+    #overrideParameters: '-appServicePlanName $(aspName)'
     deploymentMode: 'Incremental'
