@@ -2,6 +2,12 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "tags": {
+            "type": "object",
+            "metadata": {
+              "description": "Object containing Key:Value pairs of all tags to apply to a resource"
+            }
+        },
         "aksClusterName": {
             "type": "string",
             "defaultValue": "aks101cluster-vmss",
