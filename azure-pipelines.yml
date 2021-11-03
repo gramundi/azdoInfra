@@ -6,13 +6,13 @@ parameters:
   - PaaSService: ''
     type: string
     displayname: "Provide Azure service Name"
-  templateName: ''
+  - templateName: ''
     type: string
     displayname: "Provide template Name"
-  ResourceGroup: ''
+  - ResourceGroup: ''
      type: string
      displayname: "Provide Azure Resource Group"
-  AzureConn: ''
+  - AzureConn: ''
      type: string
      displayname: "Provide Azure service Connection"
 
