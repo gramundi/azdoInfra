@@ -3,17 +3,30 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 parameters:
-  PaaSService: ''
-  templateName: ''
-  ResourceGroup: ''
-  AzureConn: ''
+  - name: PaaSService
+    type: string
+    displayName: "Provide Azure service Name"
+  - name: templateName
+    type: string
+    displayName: "Provide template Name"
+  - name: ResourceGroup 
+    type: string
+    displayName: "Provide Azure Resource Group"
+  - name: AzureConn 
+    type: string
+    displayName: "Provide Azure service Connection"
+    default: "AzureConnection"
+  - name: location 
+    type: string
+    displayName: "Provide Geographic location"
+    default: "west europe"
 
 steps:
-#- task: CopyFiles@2
-#  inputs:
-#    SourceFolder: ''
-#    Contents: '**'
-#    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  inputs:
+     SourceFolder: ''
+     Contents: '**'
+     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
@@ -25,5 +38,5 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ parameters.PaaSService }}/${{ parameters.templateName }}.parameters.json'
-    overrideParameters: '-appServicePlanName $(aspName)'
+    #overrideParameters: '-appServicePlanName $(aspName)'
     deploymentMode: 'Incremental'

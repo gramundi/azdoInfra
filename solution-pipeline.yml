@@ -1,14 +1,12 @@
-trigger: none
 
-pool:
-  name: 'Home1'
+   
 
 steps:
 
 - template: azure-pipelines.yml
   parameters:
-    PaaSService: 'Asp'
-    templateName: 'appserviceplan'
-    ResourceGroup: 'SandBoxRg'
+    PaaSService: '${{parameters.azureService}}'
+    templateName: '${{parameters.tempName}}'
+    ResourceGroup: '$${{parameters.rg}}'
     AzureConn: 'AzureConnection'
     location: 'west europe'

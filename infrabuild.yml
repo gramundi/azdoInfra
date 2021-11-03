@@ -4,8 +4,6 @@ variables:
    patch: $(Build.BuildID)
    buildVer: $(major).$(minor).$(Build.BuildID)
 
-pool: 
-   name: 'Home1' 
 
 steps:
     - task: NuGetCommand@2
