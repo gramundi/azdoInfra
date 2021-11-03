@@ -3,19 +3,18 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 parameters:
-  - PaaSService: ''
+  - name: PaaSService
     type: string
-    displayname: "Provide Azure service Name"
-  - templateName: ''
+    displayName: "Provide Azure service Name"
+  - name: templateName
     type: string
-    displayname: "Provide template Name"
-  - ResourceGroup: ''
-     type: string
-     displayname: "Provide Azure Resource Group"
-  - AzureConn: ''
-     type: string
-     displayname: "Provide Azure service Connection"
-
+    displayName: "Provide template Name"
+  - name: ResourceGroup 
+    type: string
+    displayName: "Provide Azure Resource Group"
+  - name: AzureConn 
+    type: string
+    displayName: "Provide Azure service Connection"
 
 steps:
 #- task: CopyFiles@2
