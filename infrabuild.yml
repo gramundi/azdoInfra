@@ -5,7 +5,7 @@ variables:
    buildVer: $(major).$(minor).$(Build.BuildID)
 
 pool: 
-   name: 'Home1' 
+   name: 'default' 
 
 steps:
     - task: NuGetCommand@2
