@@ -1,17 +1,16 @@
 trigger: none
 
-variables:
-  - azureService: 'aks'
-  - tempName: 'aks'
-  - rg: ''
-  
-
+parameters:
+   AzureService: ''
+   tempName: ''
+   rg: ''
+   
 steps:
 
 - template: azure-pipelines.yml
   parameters:
-    PaaSService: '$azureServices'
-    templateName: '$tempName'
-    ResourceGroup: '$rg'
+    PaaSService: '${{parameters.azureService}}'
+    templateName: '${{parameters.tempName}}'
+    ResourceGroup: '$${{parameters.rg}}'
     AzureConn: 'AzureConnection'
     location: 'west europe'
