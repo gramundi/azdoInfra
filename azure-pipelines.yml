@@ -15,6 +15,7 @@ parameters:
   - name: AzureConn 
     type: string
     displayName: "Provide Azure service Connection"
+    default: "AzureConnection"
   - name: location 
     type: string
     displayName: "Provide Geographic location"
