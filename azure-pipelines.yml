@@ -22,11 +22,11 @@ parameters:
     default: "west europe"
 
 steps:
-#- task: CopyFiles@2
-#  inputs:
-#    SourceFolder: ''
-#    Contents: '**'
-#    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: CopyFiles@2
+  inputs:
+     SourceFolder: ''
+     Contents: '**'
+     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
