@@ -1,9 +1,7 @@
-trigger: none
-
 parameters:
-   AzureService: ''
-   tempName: ''
-   rg: ''
+       AzureService: ''
+       tempName: ''
+       rg: ''
    
 steps:
 
