@@ -6,6 +6,9 @@
             "value": {
                 "environment":"sandbox"
             }
+        },
+        "acrName":{
+            "value": "akscontaineracr01"
         }        
     }
 }
