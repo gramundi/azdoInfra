@@ -1,12 +1,17 @@
-
-   
-
 steps:
 
 - template: azure-pipelines.yml
   parameters:
-    PaaSService: '${{parameters.azureService}}'
-    templateName: '${{parameters.tempName}}'
-    ResourceGroup: '$${{parameters.rg}}'
+    PaaSService: 'acr'
+    templateName: 'acr'
+    ResourceGroup: 'akspocinfra'
+    AzureConn: 'AzureConnection'
+    location: 'west europe'
+
+- template: azure-pipelines.yml
+  parameters:
+    PaaSService: 'aks'
+    templateName: 'aks'
+    ResourceGroup: 'akspocinfra'
     AzureConn: 'AzureConnection'
     location: 'west europe'

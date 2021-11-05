@@ -1,0 +1,85 @@
+rg=akspocinfra
+name=aks101cluster-vmss
+
+acr=akscontaineracr01
+
+
+az aks get-credentials -n $name -g $rg
+
+Once Cluster is UP and running use the below command to setup tiller for Helm. We will use this later in this session
+
+#to be sure you do the setup on your own aks
+kubectl config set-context aks101cluster-vmss
+
+kubectl create serviceaccount gramundi --namespace kube-system
+
+kubectl create clusterrolebinding gramundi --clusterrole cluster-admin --serviceaccount=kube-system:gramundi
+
+#Create namespace as helloworld, we will deploy apps with this namespace it later in this session.
+
+kubectl create namespace testapps
+
+kubectl get ns #to check namespace has been created
+
+kubectl create clusterrolebinding default-view --clusterrole=view --serviceaccount=testapps:default
+
+Roles and Permissions for ACR We need to assign 2 specific service principals that need to interact with ACR.
+
+Grant the AKS-generated service principal pull access to our ACR, the AKS cluster will be able to pull images of our ACR
+ $ CLIENT_ID=$(az aks show -g $rg -n $name --query "identity.principalId" -o tsv)
+ $ ACR_ID=$(az acr show -n $acr -g $rg --query "id" -o tsv)
+$ az role assignment create --assignee $CLIENT_ID --role acrpull --scope $ACR_ID
+
+Create a specific Service Principal for our Azure DevOps pipelines to be able to push and pull images and charts of our ACR
+$ registryPassword=$(az ad sp create-for-rbac -n $acr-push --scopes $ACR_ID --role acrpush --query password -o tsv)
+
+We will need this registry password later in this section to create Build pipeline and Relea.Contentse pipeline.
+
+$ echo $registryPassword 
+
+T1cODkT.dP2p6v4FiNMRZVnDX8XJPPhm8Y
+
+Now, we have an ACR registry and AKS cluster ready to use throughout this session,
+
+
+#!/bin/bash
+# This script requires Azure CLI version 2.25.0 or later. Check version with `az --version`.
+
+# Modify for your environment.
+# ACR_NAME: The name of your Azure Container Registry
+# SERVICE_PRINCIPAL_NAME: Must be unique within your AD tenant
+#ACR_NAME=<conainer-registry-name>
+ACR_NAME=$acr
+SERVICE_PRINCIPAL_NAME=acr-service-principal
+
+# Obtain the full registry ID for subsequent command args
+ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
+
+# Create the service principal with rights scoped to the registry.
+# Default permissions are for docker pull access. Modify the '--role'
+# argument value as desired:
+# acrpull:     pull only
+# acrpush:     push and pull
+# owner:       push, pull, and assign roles
+SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role acrpull --query password --output tsv)
+SP_APP_ID=$(az ad sp list --display-name $SERVICE_PRINCIPAL_NAME --query [].appId --output tsv)
+
+# Output the service principal's credentials; use these in your services and
+# applications to authenticate to the container registry.
+echo "Service principal ID: $SP_APP_ID"
+echo "Service principal password: $SP_PASSWD"
+
+Service principal ID: 420fcc80-617e-4e3a-b5c6-38b77561fff2
+Service principal password: JnK02PmJJTAHL4I8m_w5OKTZG4Q4~m6nBZ
+
+GIve Role assignment ti thei service principal to push in ACR.
+
+Now, run the below Azure CLI commands from Azure Cloud Shell to check on the images and helm charts pushed to ACR List Docker images from your ACR
+
+$ az acr repository list -n $acr
+
+List Helm charts from your ACR
+
+$ az acr helm list -n $acr
+
+Now, both Docker image and Helm chart can be used for any Kubernetes cluster. Navigate to Kubernetes Service and Click on the cluster created above.
