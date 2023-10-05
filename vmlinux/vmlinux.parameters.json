@@ -47,14 +47,12 @@
             "value": "Detach"
         },
         "virtualMachineName": {
-            "value": "vmwindows"
+            "value": "vmlinuxlab"
         },
         "virtualMachineComputerName": {
-            "value": "vmwindows"
+            "value": "vmlinuxlab"
         },
-        "virtualMachineRG": {
-            "value": "SandBoxRg"
-        },
+       
         "osDiskType": {
             "value": "Premium_LRS"
         },
