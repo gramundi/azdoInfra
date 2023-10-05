@@ -38,9 +38,6 @@
         "virtualMachineComputerName": {
             "type": "string"
         },
-        "virtualMachineRG": {
-            "type": "string"
-        },
         "osDiskType": {
             "type": "string"
         },
@@ -60,9 +57,8 @@
     "variables": {
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]",
         "vnetId": "[parameters('virtualNetworkId')]",
-        "vnetName": "[last(split(variables('vnetId'), '/'))]",
-        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "aadLoginExtensionName": "AADSSHLoginForLinux"
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]"
+        
     },
     "resources": [
         {
@@ -166,22 +162,8 @@
             "identity": {
                 "type": "systemAssigned"
             }
-        },
-        {
-            "name": "[concat(parameters('virtualMachineName'),'/', variables('aadLoginExtensionName'))]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "apiVersion": "2018-10-01",
-            "location": "[parameters('location')]",
-            "properties": {
-                "publisher": "Microsoft.Azure.ActiveDirectory",
-                "type": "[variables('aadLoginExtensionName')]",
-                "typeHandlerVersion": "1.0",
-                "autoUpgradeMinorVersion": true
-            },
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
-            ]
         }
+        
     ],
     "outputs": {
         "adminUsername": {
