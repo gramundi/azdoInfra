@@ -10,7 +10,7 @@
           },
 
             "adminPublicKey": {
-              "value":"adminmykey"
+              "value":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVrQ526+BVcIY26kJz01j7i5al8dxcPlW+Vtoq8Kx/9JSDLWWTX0Gjv25a1Ty6ZcyNh30oIepvZZhTv4SyBT2yPirj4PMQ3Kbjx9uqCzpYXeF6D0c3ANYYpRaD93b4Ve7LJKMzv5kg3LzP0DQqRK7wAvy3imy8cuyyuY9hA4uUZh5llZo3QMX8D05TAWO1WdFiGYb5qP180PVWnLDnBs3kRWdc/k2nZ5PB2q+lnR8HrVMIFIAu5kZ/9S0+wLGj916/eiuXMUA0j0qKnW4BsNCVXUcsd2H0ckaF1wmxVfe3FncPsSxpjgwRO1p9JTDksd5YTIaenNbLihj3ryuj0KTfr9P/Nl/ZJe5jjeNykUV4IUz4XQbvWrMwdEfyKG7JQ3TGsmJxJOA+UpVR0fwkoGty+kEHw1SbdDyvIWqG+PdQ5M7kJcxgdtn9J8KFjquJlInMNDYYWQxa2ArxL5tcvevIW5Q3xpPiWqEJLEUSTZPXm7qhHp+EeeJE56vP9gAaVqU= jhonny@lap"
             }            
           }
         
