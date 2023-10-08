@@ -12,7 +12,7 @@ steps:
   displayName: Azure CLI
   inputs:
     azureSubscription: "AzureConnection"
-    scriptType: ps
+    scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
       az group delete --name exampleGroup ${{parameters.resourceGroup}}
