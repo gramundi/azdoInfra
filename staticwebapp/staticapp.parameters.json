@@ -13,15 +13,8 @@
         },
         "skucode": {
             "value": "Free"
-        },
-        "repositoryUrl": {
-            "value": "https://github.com/gramundi/azdoInfra"
-        },
-        "branch": {
-            "value": "main"
-        },
-        "repositoryToken": {
-            "value": "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" 
         }
+        
+        
              }
 }
