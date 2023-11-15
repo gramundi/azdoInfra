@@ -13,8 +13,15 @@
         },
         "skucode": {
             "value": "Free"
+        },
+        "repositoryUrl": {
+            "value": "https://github.com/gramundi/giovanniBlog"
+        },
+        "branch": {
+            "value": "main"
+        },
+        "repositoryToken": {
+            "value": "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" 
         }
-        
-        
              }
 }
