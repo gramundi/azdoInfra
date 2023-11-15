@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "myfirstswadeployment"
+        },
+        "location": { 
+            "value": "West Europe"
+        },   
+        "sku": {
+            "value": "Free"
+        },
+        "skucode": {
+            "value": "Free"
+        },
+        "repositoryUrl": {
+            "value": "https://github.com/gramundi/azdoInfra"
+        },
+        "branch": {
+            "value": "main"
+        },
+        "repositoryToken": {
+            "value": "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" 
+        }
+             }
+}
