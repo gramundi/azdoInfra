@@ -35,7 +35,7 @@
             "properties": {
                 "repositoryUrl": "[parameters('repositoryUrl')]",
                 "branch": "[parameters('branch')]",
-                "repositoryToken": "[parameters('repositoryToken')]",
+                "repositoryToken": "[parameters('repositoryToken')]"
                 
             },
             "sku": {
@@ -44,4 +44,4 @@
             }
         }
     ]   
-    }
+}
