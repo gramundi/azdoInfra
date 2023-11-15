@@ -15,13 +15,13 @@
             "value": "Free"
         },
         "repositoryUrl": {
-            "value": "https://github.com/gramundi/giovanniBlog"
+            "value": "https://gramundi@dev.azure.com/gramundi/computing/_git/swebappnode"
         },
         "branch": {
             "value": "main"
         },
         "repositoryToken": {
-            "value": "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" 
+            "value": "732zpo7pm3uit5p4l57jowlzxjm2wkgiujtwb4n7lfsaoq5b732q" 
         }
              }
 }
