@@ -12,6 +12,7 @@ steps:
      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Creating Azure Container Registry'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: AzureConnection
@@ -41,7 +42,7 @@ steps:
   displayName: 'Login into my Tenant'
 
 - bash: |
-   sc=$(az car show --name $(acrName) --query id --output tsv)
+   sc=$(az acr show --name $(acrName) --query id --output tsv)
    echo "##vso[task.setvariable variable=sc]$sc"
 
 - bash: az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
