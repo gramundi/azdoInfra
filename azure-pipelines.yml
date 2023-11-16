@@ -17,7 +17,7 @@ steps:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: ${{variables.AzureConn}}
     action: 'Create Or Update Resource Group'
-    resourceGroupName: ${{varaiables.ResourceGroup}}'
+    resourceGroupName: ${{variables.ResourceGroup}}'
     location: ${{variables.location}}
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/${{variables.PaaSService}}/${{variables.templateName}}.json'
