@@ -12,3 +12,16 @@ steps:
      Contents: '**'
      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '$(AzureConn)'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '$(ResourceGroup)'
+    location: '$(location)'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).parameters.json'
+    overrideParameters: '-acrName testacr'
+    deploymentMode: 'Incremental'
+
