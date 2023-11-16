@@ -5,7 +5,8 @@
 variables:
   - group: project-infrastructure-dev
 steps:
-- script: echo $(PaaSService)
+- bash: |
+   echo "##vso[task.setvariable variable=location;isoutput=true]$location"            
 - task: CopyFiles@2
   inputs:
      SourceFolder: ''
