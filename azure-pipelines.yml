@@ -2,25 +2,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-parameters:
-  - name: PaaSService
-    type: string
-    displayName: "Provide Azure service Name"
-  - name: templateName
-    type: string
-    displayName: "Provide template Name"
-  - name: ResourceGroup 
-    type: string
-    displayName: "Provide Azure Resource Group"
-  - name: AzureConn 
-    type: string
-    displayName: "Provide Azure service Connection"
-    default: "AzureConnection"
-  - name: location 
-    type: string
-    displayName: "Provide Geographic location"
-    default: "west europe"
-
 steps:
 - task: CopyFiles@2
   inputs:
