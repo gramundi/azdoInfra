@@ -43,6 +43,8 @@ steps:
 
 - bash: |
    sc=$(az acr show --name $(acrName) --query id --output tsv)
-   echo "##vso[task.setvariable variable=sc]$sc"
+   echo "##vso[task.setvariable variable=sc;]$sc"
 
-- bash: az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
+- bash: |
+  echo "SC variable is:"$sc
+  az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
