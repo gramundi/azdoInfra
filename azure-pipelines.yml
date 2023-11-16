@@ -15,7 +15,7 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: '$[variables.AzureConn]'
+    azureResourceManagerConnection: $[variables.AzureConn]
     action: 'Create Or Update Resource Group'
     resourceGroupName: '$(ResourceGroup)'
     location: '$(location)'
