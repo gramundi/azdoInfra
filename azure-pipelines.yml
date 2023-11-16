@@ -17,11 +17,11 @@ steps:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: ${{variables.AzureConn}}
     action: 'Create Or Update Resource Group'
-    resourceGroupName: '$(ResourceGroup)'
-    location: '$(location)'
+    resourceGroupName: ${{varaiables.ResourceGroup}}'
+    location: ${{variables.location}}
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).parameters.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/${{variables.PaaSService}}/${{variables.templateName}}.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{variables.PaaSService}}/${{variables.templateName}}.parameters.json'
     overrideParameters: '-acrName testacr'
     deploymentMode: 'Incremental'
 
