@@ -18,7 +18,7 @@ steps:
     azureResourceManagerConnection: AzureConnection
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
-    location: ${{ location }}
+    location: ${{ variables.project-infrastructure-dev.location }}
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/${{ variables.PaaSService }}/${{ variables.templateName }}.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/${{ variables.PaaSService }}/${{ variables.templateName }}.parameters.json'
