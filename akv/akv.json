@@ -41,6 +41,14 @@
             "metadata": {
                 "description": "Specifies whether the key vault is a standard vault or a premium vault."
             }
+        },
+        "accessPolicies": {
+            "type": "array",
+            "defaultValue": [
+            ],
+            "metadata": {
+                "description": "An complex object array that contains the complete definition of the access policy."
+            }
         }
     },
     "resources": [
