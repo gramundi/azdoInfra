@@ -14,7 +14,7 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnConnection
+    azureResourceManagerConnection: AzureConnection
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
     location: $(variables.location)
