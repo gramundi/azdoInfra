@@ -19,8 +19,34 @@ steps:
     resourceGroupName: pythonsolution
     location: $(variables.location)
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/$(PaaSService)/$(templateName).parameters.json'
+    csmFile: '$(Build.ArtifactStagingDirectory)/acr/acr.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/acr/acr.parameters.json'
+    overrideParameters: '-acrName acrlabpython'
+    deploymentMode: 'Incremental'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: AzureConnection
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: pythonsolution
+    location: $(variables.location)
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.ArtifactStagingDirectory)/akv/akv.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
+    overrideParameters: '-akvName akvlabpython'
+    deploymentMode: 'Incremental'
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: AzureConnection
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: pythonsolution
+    location: $(variables.location)
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.ArtifactStagingDirectory)/aci/aci.json'
+    csmParametersFile: '$(Build.ArtifactStagingDirectory)/aci/aci.parameters.json'
     overrideParameters: '-acrName acrlabpython'
     deploymentMode: 'Incremental'
 
