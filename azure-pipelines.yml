@@ -46,5 +46,5 @@ steps:
    echo "##vso[task.setvariable variable=sc;]$sc"
 
 - bash: |
-  echo "SC variable is:"$sc
-  az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
+   echo "SC variable is:"$sc
+   az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
