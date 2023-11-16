@@ -47,10 +47,4 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/aci/aci.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/aci/aci.parameters.json'
-- task: AzureAppServiceManage@0
-  inputs:
-    Action: 'Swap Slots'
-    WebAppName: 
-    overrideParameters: '-acrName acrlabpython'
-    deploymentMode: 'Incremental'
 
