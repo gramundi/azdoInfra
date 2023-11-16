@@ -34,7 +34,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/akv/akv.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
-    overrideParameters: '-akvName akvlabpython'
+    overrideParameters: '-vaultName akvlabpython'
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
