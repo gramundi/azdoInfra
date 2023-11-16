@@ -1,0 +1,87 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vaultName": {
+            "type": "string",
+            "defaultValue": "[concat('keyvault-', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "Specifies the name of the KeyVault, this value must be globally unique."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Specifies the Azure location where the key vault should be created."
+            }
+        },
+        "enabledForDeployment": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Specifies whether Azure Virtual Machines are permitted to retrieve certificates stored as secrets from the key vault."
+            }
+        },
+        
+        "tenantId": {
+            "type": "string",
+            "defaultValue": "[subscription().tenantId]",
+            "metadata": {
+                "description": "Specifies the Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get it by using Get-AzSubscription cmdlet."
+            }
+        },
+        "skuName": {
+            "type": "string",
+            "defaultValue": "Standard",
+            "allowedValues": [
+                "Standard",
+                "Premium"
+            ],
+            "metadata": {
+                "description": "Specifies whether the key vault is a standard vault or a premium vault."
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('vaultName')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "tenantId": "[parameters('tenantId')]",
+                "sku": {
+                    "family": "A",
+                    "name": "[parameters('skuName')]"
+                },
+                "copy": [
+                    {
+                        "name": "accessPolicies",
+                        "count": "[length(parameters('accessPolicies'))]",
+                        "input": {
+                            "tenantId": "[parameters('accessPolicies')[copyIndex('accessPolicies')].tenantId]",
+                            "objectId": "[parameters('accessPolicies')[copyIndex('accessPolicies')].objectId]",
+                            "permissions": "[parameters('accessPolicies')[copyIndex('accessPolicies')].permissions]"
+                        }
+                    }
+                ]
+                
+            }
+        }
+    ],
+    "outputs": {
+        "vaultName": {
+            "type": "string",
+            "value": "[parameters('vaultName')]"
+        },
+        "vaultResourceGroup": {
+            "type": "string",
+            "value": "[resourceGroup().name]"
+        },
+        "location": {
+            "type": "string",
+            "value": "[parameters('location')]"
+        }
+    }
+}
