@@ -1,8 +1,11 @@
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# https://aka.ms/
+variables:
+  - group: project-infrastructure-dev
 steps:
+- script: echo $(PaaSService)
 - task: CopyFiles@2
   inputs:
      SourceFolder: ''
