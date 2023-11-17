@@ -41,8 +41,8 @@ steps:
 
 
 - bash: |
-   adospuser=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospClientID --query value`
-   adosppwd=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospSecret --query value`
+   adospuser=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospClientID --query value --output tsv`
+   adosppwd=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospSecret --query value --output tsv`
    echo "##vso[task.setvariable variable=adospuser;]$adospuser"
    echo "##vso[task.setvariable variable=adosppwd;]$adosppwd"
    echo "user:"$adospuser
