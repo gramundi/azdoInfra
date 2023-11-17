@@ -26,6 +26,7 @@ steps:
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Creating Azure Key Vault'
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: AzureConnection
@@ -38,12 +39,16 @@ steps:
     overrideParameters: '-vaultName akvlabpython'
     deploymentMode: 'Incremental'
 
-- bash: az login --service-principal -u 11e1dfbe-bd42-4a67-9b8f-da271d7e323d  -p Epf8Q~tAGlcB6bihKYK4xtLB3Tl31UnS5weH5a20  --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
+
+- bash: |
+   adospuser=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospClientID --query value  -o tsv`
+   adosppwd=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospSecret --query value  -o tsv`
+   az login --service-principal -u $adospuser  -p $adosppwd  --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
   displayName: 'Login into my Tenant'
 
 - bash: |
    sc=`az acr show --name acrlabpython  --query id --output tsv`
-   echo $sc
    echo "##vso[task.setvariable variable=sc;]$sc"
-   echo "sc isisisisiis"$sc
-   az ad sp create-for-rbac --name http://$(acrName)-pull --scopes $sc  --role acrpull
+   echo "sc "$sc
+   az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull
+  displayName: 'Creating sp with acrpull permission to the container registry'
