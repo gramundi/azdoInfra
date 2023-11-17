@@ -40,8 +40,8 @@ steps:
     deploymentMode: 'Incremental'
 
 - task: AzureCLI@2
-displayName: 'Testthisway'
-inputs:
+  displayName: 'Testthisway'
+  inputs:
    azureSubscription: AzureConnection
    scriptType: bash
    scripLocation: inlineScript
