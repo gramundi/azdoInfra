@@ -45,9 +45,9 @@ steps:
       KeyVaultName: keyvaultTestLabGiov01
       SecretsFilter: 'adospClientID,adospSecret'
       RunAsPreJob: true 
-  - script: |
+- script: |
       az login --service-principal -u $(adospClientID) -p $(adospSecret) --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
-    displayName: 'Login into my Tenant'
+  displayName: 'Login into my Tenant'
 
 - bash: |
    sc=`az acr show --name acrlabpython  --query id --output tsv`
