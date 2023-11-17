@@ -39,27 +39,15 @@ steps:
     overrideParameters: '-vaultName akvlabpython'
     deploymentMode: 'Incremental'
 
-- task: AzureCLI@2
-  displayName: 'Testthisway'
+- task: AzureKeyVault@1
   inputs:
-   azureSubscription: AzureConnection
-   scriptType: bash
-   scripLocation: inlineScript
-   inlineScript: |
-      sc=`az acr show --name acrlabpython  --query id --output tsv`
-      echo "##vso[task.setvariable variable=sc;]$sc"
-      echo "sc "$sc
-      az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull
-
-- bash: |
-   adospuser=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospClientID --query value --output tsv`
-   adosppwd=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospSecret --query value --output tsv`
-   echo "##vso[task.setvariable variable=adospuser;]$adospuser"
-   echo "##vso[task.setvariable variable=adosppwd;]$adosppwd"
-   echo "user:"$adospuser
-   echo "password:"$adosppwd
-   az login --service-principal -u $adospuser  -p $adosppwd  --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
-  displayName: 'Login into my Tenant'
+      ConnectedServiceName: AzureConnection
+      KeyVaultName: keyvaultTestLabGiov01
+      SecretsFilter: 'adospClientID,adospSecret'
+      RunAsPreJob: true 
+  - script: |
+      az login --service-principal -u $(adospClientID) -p $(adospSecret) --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
+    displayName: 'Login into my Tenant'
 
 - bash: |
    sc=`az acr show --name acrlabpython  --query id --output tsv`
