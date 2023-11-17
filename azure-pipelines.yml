@@ -22,7 +22,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/acr/acr.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/acr/acr.parameters.json'
-    overrideParameters: '-acrName acrlabpython'
+    overrideParameters: '-acrName $(acrName)'
     deploymentMode: 'Incremental'
 
 - task: AzureResourceManagerTemplateDeployment@3
@@ -36,7 +36,7 @@ steps:
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/akv/akv.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
-    overrideParameters: '-vaultName akvlabpython'
+    overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
 
 - task: AzureKeyVault@1
@@ -57,8 +57,8 @@ steps:
    echo "Push secret to keyvault :"$res
    user=`echo $res | awk '{print $1}'`
    secret=`echo $res | awk '{print $3}'`
-   az keyvault secret set --vault-name akvlabpython --name acr-pull-usr --value $user
-   az keyvault secret set --vault-name akvlabpython --name acr-pull-pwd --value $secret
+   az keyvault secret set --vault-name $(akvName) --name acr-pull-usr --value $user
+   az keyvault secret set --vault-name $(akvName) --name acr-pull-pwd --value $secret
   displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
 
   
