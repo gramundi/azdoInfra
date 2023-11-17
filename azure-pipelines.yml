@@ -39,6 +39,17 @@ steps:
     overrideParameters: '-vaultName akvlabpython'
     deploymentMode: 'Incremental'
 
+- task: AzureCLI@2
+displayName: 'Testthisway'
+inputs:
+   azureSubscription: AzureConnection
+   scriptType: bash
+   scripLocation: inlineScript
+   inlineScript: |
+   sc=`az acr show --name acrlabpython  --query id --output tsv`
+   echo "##vso[task.setvariable variable=sc;]$sc"
+   echo "sc "$sc
+   az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull
 
 - bash: |
    adospuser=`az keyvault secret show --vault-name keyvaultTestLabGiov01 -n adospClientID --query value --output tsv`
