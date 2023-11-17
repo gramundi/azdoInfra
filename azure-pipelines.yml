@@ -53,5 +53,14 @@ steps:
    sc=`az acr show --name acrlabpython  --query id --output tsv`
    echo "##vso[task.setvariable variable=sc;]$sc"
    echo "sc "$sc
-   az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull --scopes $sc
-  displayName: 'Creating sp with acrpull permission to the container registry'
+   res=$(az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull --scopes $sc --output tsv)
+   echo "Push secret to keyvault :"$res
+   user=`echo $res | awk '{print $1}'`
+   secret=`echo $res | awk '{print $3}'`
+   az keyvault secret set --vault-name akvlabpython --name acr-pull-usr --value $user
+   az keyvault secret set --vault-name akvlabpython --name acr-pull-pwd --value $secret
+  displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
+
+  
+        
+  
