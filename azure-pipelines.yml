@@ -25,6 +25,7 @@ steps:
     overrideParameters: '-acrName $(acrName)'
     deploymentMode: 'Incremental'
 
+
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Creating Azure Key Vault'
   inputs:
@@ -61,6 +62,8 @@ steps:
    az keyvault secret set --vault-name $(akvName) --name acr-pull-pwd --value $secret
   displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
 
-  
+- bash: |
+    token=`az acr token create -n acrPythonToken -r $(acrName) --scope-map pythonScope`
+    echo $token
         
   
