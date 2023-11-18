@@ -63,7 +63,7 @@ steps:
   displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
 
 - bash: |
-    token=`az acr token create -n acrPythonToken -r $(acrName) --scope-map pythonScope`
+    token=`az acr token create -n acrPythonToken -r $(acrName) --repository python content/read content/write`
     echo $token
         
   
