@@ -25,8 +25,21 @@ steps:
     overrideParameters: '-acrName $(acrName)'
     deploymentMode: 'Incremental'
 
+- task: AzureKeyVault@1
+  inputs:
+      ConnectedServiceName: AzureConnection
+      KeyVaultName: keyvaultTestLabGiov01
+      SecretsFilter: 'adospClientID,adospSecret'
+      RunAsPreJob: true 
+  displayName: 'Fetching Credential for permission in AAD'
+
 - script: |
-    az keyvault purge --name akvlabpython
+      az login --service-principal -u $(adospClientID) -p $(adospSecret) --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
+  displayName: 'Login into my Tenant'
+
+
+- script: |
+    az keyvault purge --name $(akvName)
   displayName: 'Delete Keyvault from a previuos RUN'
 
 - task: AzureResourceManagerTemplateDeployment@3
@@ -43,18 +56,7 @@ steps:
     overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
 
-- task: AzureKeyVault@1
-  inputs:
-      ConnectedServiceName: AzureConnection
-      KeyVaultName: keyvaultTestLabGiov01
-      SecretsFilter: 'adospClientID,adospSecret'
-      RunAsPreJob: true 
-  displayName: 'Fetching Credential for permission in AAD'
   
-- script: |
-      az login --service-principal -u $(adospClientID) -p $(adospSecret) --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
-  displayName: 'Login into my Tenant'
-
 - bash: |
    sc=$(az acr show --name $(acrName)  --query id --output tsv)
    echo "##vso[task.setvariable variable=sc;]$sc"
