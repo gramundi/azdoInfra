@@ -25,6 +25,9 @@ steps:
     overrideParameters: '-acrName $(acrName)'
     deploymentMode: 'Incremental'
 
+- script: |
+    az keyvault purge --name akvlabpython
+  displayName: 'Delete Keyvault from a previuos RUN'
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Creating Azure Key Vault'
