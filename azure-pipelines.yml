@@ -41,6 +41,7 @@ steps:
 - script: |
       az keyvault purge --name $(akvName)
   displayName: 'Delete Keyvault from a previuos RUN'
+  continueOnError: true
 
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: 'Creating Azure Key Vault'
