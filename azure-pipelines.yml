@@ -39,7 +39,7 @@ steps:
 
 
 - script: |
-    az keyvault purge --name $(akvName)
+      az keyvault purge --name $(akvName)
   displayName: 'Delete Keyvault from a previuos RUN'
 
 - task: AzureResourceManagerTemplateDeployment@3
@@ -55,6 +55,7 @@ steps:
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
     overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
+  condition: true
 
   
 - bash: |
