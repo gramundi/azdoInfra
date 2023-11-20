@@ -56,7 +56,7 @@ steps:
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
     overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
-  condition: true
+  condition: eq(dependencies.StopApplication.result, 'SucceededWithIssues')
 
   
 - bash: |
@@ -70,11 +70,9 @@ steps:
    az keyvault secret set --vault-name $(akvName) --name acr-pull-usr --value $user
    az keyvault secret set --vault-name $(akvName) --name acr-pull-pwd --value $secret
   displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
-  condition: true
-
+  
 - bash: |
     token=`az acr token create -n acrPythonToken -r $(acrName) --repository python content/read content/write --query credentials.passwords[0].value -o tsv`
     az keyvault secret set --vault-name $(akvName) --name acr-repo-token --value $token
   displayName: 'generate tken for access to ACR python repo'        
-  condition: true
   
