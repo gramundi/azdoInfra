@@ -57,8 +57,7 @@ steps:
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
     overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
-  condition: eq(dependencies.deleteAKV.result, 'SucceededWithIssues')
-
+  
   
 - bash: |
    sc=$(az acr show --name $(acrName)  --query id --output tsv)
