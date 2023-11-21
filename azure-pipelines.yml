@@ -57,6 +57,7 @@ steps:
     deploymentMode: 'Incremental'
 
   
+
 - bash: |
    sc=$(az acr show --name $(acrName)  --query id --output tsv)
    echo "##vso[task.setvariable variable=sc;]$sc"
@@ -74,3 +75,10 @@ steps:
     az keyvault secret set --vault-name $(akvName) --name acr-repo-token --value $token
   displayName: 'generate tken for access to ACR python repo'        
   
+  extends:
+  template: /library/set-secrets.yml
+  parameters:
+    secretNAme: "testsecret"
+    secretValue: "jkjsljdk"
+    Keyvault: "keyvaultTestLabGiov01"
+    serviceConnection: "AzureConnection"
