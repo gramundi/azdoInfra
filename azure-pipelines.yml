@@ -15,7 +15,7 @@ steps:
   displayName: 'Creating Azure Container Registry'
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnection
+    azureResourceManagerConnection: $(AzureConn)
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
     location: $(variables.location)
@@ -27,7 +27,7 @@ steps:
 
 - task: AzureKeyVault@1
   inputs:
-      ConnectedServiceName: AzureConnection
+      ConnectedServiceName: $(AzureConn)
       KeyVaultName: keyvaultTestLabGiov01
       SecretsFilter: 'adospClientID,adospSecret'
       RunAsPreJob: true 
@@ -48,7 +48,7 @@ steps:
   displayName: 'Creating Azure Key Vault'
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnection
+    azureResourceManagerConnection: $(AzureConn)
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
     location: $(variables.location)
