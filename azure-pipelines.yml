@@ -77,8 +77,7 @@ steps:
     az keyvault secret set --vault-name $(akvName) --name acr-repo-token --value $token
   displayName: 'generate tken for access to ACR python repo'        
   
-  extends:
-  template: templates/library/set-secrets.yml
+  template: /library/set-secrets.yml
   parameters:
     secretNAme: "testsecret"
     secretValue: "jkjsljdk"
