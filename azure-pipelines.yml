@@ -12,41 +12,74 @@ steps:
      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Creating Azure Container Registry'
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnection
+    azureResourceManagerConnection: $(AzureConn)
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
     location: $(variables.location)
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/acr/acr.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/acr/acr.parameters.json'
-    overrideParameters: '-acrName acrlabpython'
+    overrideParameters: '-acrName $(acrName)'
     deploymentMode: 'Incremental'
 
+- task: AzureKeyVault@1
+  inputs:
+      ConnectedServiceName: $(AzureConn)
+      KeyVaultName: keyvaultTestLabGiov01
+      SecretsFilter: 'adospClientID,adospSecret'
+      RunAsPreJob: true 
+  displayName: 'Fetching Credential for permission in AAD'
+
+- script: |
+      az login --service-principal -u $(adospClientID) -p $(adospSecret) --tenant c9a7654a-5212-4510-94a0-57f7f18d33b6
+  displayName: 'Login into my Tenant'
+
+
+- script: |
+      az keyvault purge --name $(akvName)
+  displayName: 'Delete Keyvault from a previuos RUN'
+  continueOnError: true
+  name: deleteAKV
+
 - task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'Creating Azure Key Vault'
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnection
+    azureResourceManagerConnection: $(AzureConn)
     action: 'Create Or Update Resource Group'
     resourceGroupName: pythonsolution
     location: $(variables.location)
     templateLocation: 'Linked artifact'
     csmFile: '$(Build.ArtifactStagingDirectory)/akv/akv.json'
     csmParametersFile: '$(Build.ArtifactStagingDirectory)/akv/akv.parameters.json'
-    overrideParameters: '-akvName akvlabpython'
+    overrideParameters: '-vaultName $(akvName)'
     deploymentMode: 'Incremental'
+  
+  
 
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: AzureConnection
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: pythonsolution
-    location: $(variables.location)
-    templateLocation: 'Linked artifact'
-    csmFile: '$(Build.ArtifactStagingDirectory)/aci/aci.json'
-    csmParametersFile: '$(Build.ArtifactStagingDirectory)/aci/aci.parameters.json'
-    overrideParameters: '-acrName acrlabpython'
-    deploymentMode: 'Incremental'
-
+- bash: |
+   sc=$(az acr show --name $(acrName)  --query id --output tsv)
+   echo "##vso[task.setvariable variable=sc;]$sc"
+   echo "sc "$sc
+   res=$(az ad sp create-for-rbac --name http://$(acrName)-pull --role acrpull --scopes $sc --output tsv)
+   echo "Push secret to keyvault :"$res
+   user=`echo $res | awk '{print $1}'`
+   secret=`echo $res | awk '{print $3}'`
+   az keyvault secret set --vault-name $(akvName) --name acr-pull-usr --value $user
+   az keyvault secret set --vault-name $(akvName) --name acr-pull-pwd --value $secret
+  displayName: 'Creating sp with acrpull permission to the container registry & register secrets on kevault'
+  
+- bash: |
+    token=`az acr token create -n acrPythonToken -r $(acrName) --repository python content/read content/write --query credentials.passwords[0].value -o tsv`
+    az keyvault secret set --vault-name $(akvName) --name acr-repo-token --value $token
+  displayName: 'generate tken for access to ACR python repo'        
+  
+- template: /library/set-secrets-akv.yml
+  parameters:
+      secretNAme: "testsecret"
+      secretValue: "jkjsljdk"
+      Keyvault: "keyvaultTestLabGiov01"
+      serviceConnection: "AzureConnection"
